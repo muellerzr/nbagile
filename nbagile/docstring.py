@@ -7,7 +7,7 @@ from __future__ import annotations
 __all__ = ['get_annotations', 'reformat_function', 'addition']
 
 # Cell
-import inspect
+import inspect, ast, astunparse
 #nbdev_comment from __future__ import annotations
 import fastcore.docments as dments
 
@@ -44,6 +44,7 @@ def reformat_function(
     parsed_source = ast.parse(source)
     for i in range(len(parsed_source.body[0].args.args)):
         parsed_source.body[0].args.args[i].annotation = None
+    parsed_source.body[0].returns = None
     unparsed_source = astunparse.unparse(parsed_source).lstrip('\n').split('\n')
     function_definition = unparsed_source[0]
     function_innards = "\n".join(unparsed_source[2:])
@@ -55,13 +56,13 @@ def reformat_function(
     docstring += f'{_get_whitespace()}----------\n'
     for i, param in enumerate(docs.keys()):
         if param != "return":
-            docstring += f'{_get_whitespace()}{param} : {annos[i]}\n'
+            docstring += f'{_get_whitespace()}{param} : {annos[0][i]}\n'
             docstring += f'{whitespace_char * (num_whitespace+2)}{docs[param]}\n'
-        if (annos[-1] != inspect._empty) and ('return' in docs.keys()):
-            docstring += f'{_get_whitespace()}Returns\n'
-            docstring += f'{_get_whitespace()}-------\n'
-            docstring += f'{_get_whitespace()}{annos[-1]}\n'
-            docstring += f'{_get_whitespace()}{docs["return"]}\n'
+    if (annos[-1] != inspect._empty) and ('return' in docs.keys()):
+        docstring += f'\n{_get_whitespace()}Returns\n'
+        docstring += f'{_get_whitespace()}-------\n'
+        docstring += f'{_get_whitespace()}{annos[1]}\n'
+        docstring += f'{whitespace_char * (num_whitespace+2)}{docs["return"]}\n'
     docstring += f'{_get_whitespace()}"""\n'
     return f'{function_definition}{docstring}{function_innards}'
 
