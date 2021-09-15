@@ -4,37 +4,35 @@
 from __future__ import annotations
 
 
-__all__ = ['get_annotations', 'reformat_function', 'reformat_function', 'addition']
+__all__ = ['get_annotations', 'reformat_function', 'addition']
 
 # Cell
+import inspect
 #nbdev_comment from __future__ import annotations
+import fastcore.docments as dments
 
 # Cell
 def get_annotations(
     source:str # Source code of function or class
 ):
     "Extracts the type annotations from source code"
-    annos = []
-    orig = list(locals().keys())
-    exec(source);
-    new = list(locals().keys())
-    orig += ['new', 'orig']
-    new += ['new']
-    for key in set(new) - set(orig):
-        params = inspect.signature(locals()[key]).parameters.keys()
-        param_args = []
-        for param in params:
-            param_args.append(inspect.signature(locals()[key]).parameters[param].default)
-        return_anno = inspect.signature(locals()[key]).return_annotation
-        annos.append((
-            locals()[key].__annotations__,
-            locals()[key].__doc__,
-            param_args,
-            return_anno
-        ))
-        del locals()[key]
-    if len(annos) == 1: return annos[0]
-    else: return annos
+    parse = ast.parse(source)
+    arg_annos = []
+    for i,anno in enumerate(parse.body[0].args.args):
+        if anno.annotation is not None:
+            arg_annos.append(astunparse.unparse(anno.annotation).strip('\n'))
+        else:
+            arg_annos.append(anno.annotation)
+        parse.body[0].args.args[i].annotation = None
+    if parse.body[0].returns is not None:
+        ret_anno = astunparse.unparse(parse.body[0].returns).strip('\n')
+    else:
+        ret_anno = None
+    return arg_annos, ret_anno
+
+# Cell
+def _get_leading(o):
+    return len(o) - len(o.lstrip(o[0])), o[0]
 
 # Cell
 def reformat_function(
@@ -43,68 +41,29 @@ def reformat_function(
     "Takes messy source code and refactors it into a readable PEP-8 standard style"
     docs = dments.docments(source)
     annos = get_annotations(source)
-    param_locs = dments._param_locs(source)
-    new_source = ''
-    new_source += source.split('\n')[0]
-    for i, (name, default) in enumerate(zip(annos[0].keys(), annos[2])):
-        new_source += f'{name}'
-        if default != inspect._empty:
-            new_source += f'={default}'
-        if i < len(annos[2])-1:
-            new_source += ','
-        else:
-            new_source += '):'
-    new_source.rstrip(',')
-    _ds = '    '
-    new_source += f'\n{_ds}"""\n{_ds}'
-    new_source += f'{annos[1]}\n\n'
-    new_source += f'{_ds}Parameters\n{_ds}----------\n'
-    for param in param_locs.values():
-        if param != 'return':
-            new_source += f'{_ds}{param} : {annos[0][param]}\n\t'
-            new_source += docs[param] + '\n'
-    if annos[-1] != inspect._empty:
-        new_source += f'\n{_ds}Returns:\n{_ds}--------\n'
-        new_source += f'{_ds}{annos[-1]}\n\t{docs["return"]}\n'
-    new_source += f'{_ds}"""'
-    new_source += source.split('"')[-1]
-    new_source = new_source.rstrip('\n')
-    return new_source
+    parsed_source = ast.parse(source)
+    for i in range(len(parsed_source.body[0].args.args)):
+        parsed_source.body[0].args.args[i].annotation = None
+    unparsed_source = astunparse.unparse(parsed_source).lstrip('\n').split('\n')
+    function_definition = unparsed_source[0]
+    function_innards = "\n".join(unparsed_source[2:])
+    def _get_whitespace(): return whitespace_char*num_whitespace
 
-# Cell
-def reformat_function(
-    source:str, # Source code
-):
-    "Takes messy source code and refactors it into a readable PEP-8 standard style"
-    docs = dments.docments(source)
-    annos = get_annotations(source)
-    param_locs = dments._param_locs(source)
-    new_source = ''
-    new_source += source.split('\n')[0]
-    for i, (name, default) in enumerate(zip(annos[0].keys(), annos[2])):
-        new_source += f'{name}'
-        if default != inspect._empty:
-            new_source += f'={default}'
-        if i < len(annos[2])-1:
-            new_source += ','
-        else:
-            new_source += '):'
-    new_source.rstrip(',')
-    _ds = '    '
-    new_source += f'\n{_ds}"""\n{_ds}'
-    new_source += f'{annos[1]}\n\n'
-    new_source += f'{_ds}Parameters\n{_ds}----------\n'
-    for param in param_locs.values():
-        if param != 'return':
-            new_source += f'{_ds}{param} : {annos[0][param]}\n\t'
-            new_source += docs[param] + '\n'
-    if annos[-1] != inspect._empty:
-        new_source += f'\n{_ds}Returns:\n{_ds}--------\n'
-        new_source += f'{_ds}{annos[-1]}\n\t{docs["return"]}\n'
-    new_source += f'{_ds}"""'
-    new_source += source.split('"')[-1]
-    new_source = new_source.rstrip('\n')
-    return new_source
+    num_whitespace, whitespace_char = _get_leading(unparsed_source[2])
+    docstring = f'\n{_get_whitespace()}"""\n'
+    docstring += f'{_get_whitespace()}Parameters\n'
+    docstring += f'{_get_whitespace()}----------\n'
+    for i, param in enumerate(docs.keys()):
+        if param != "return":
+            docstring += f'{_get_whitespace()}{param} : {annos[i]}\n'
+            docstring += f'{whitespace_char * (num_whitespace+2)}{docs[param]}\n'
+        if (annos[-1] != inspect._empty) and ('return' in docs.keys()):
+            docstring += f'{_get_whitespace()}Returns\n'
+            docstring += f'{_get_whitespace()}-------\n'
+            docstring += f'{_get_whitespace()}{annos[-1]}\n'
+            docstring += f'{_get_whitespace()}{docs["return"]}\n'
+    docstring += f'{_get_whitespace()}"""\n'
+    return f'{function_definition}{docstring}{function_innards}'
 
 # Cell
 def addition(
