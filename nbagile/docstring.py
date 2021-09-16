@@ -47,15 +47,22 @@ def reformat_function(
     parsed_source.body[0].returns = None
     unparsed_source = astunparse.unparse(parsed_source).lstrip('\n').split('\n')
     function_definition = unparsed_source[0]
-    function_innards = "\n".join(unparsed_source[2:])
+    # Check if we have a docstring
+    if isinstance(parsed_source.body[0].body[0].value, ast.Str):
+        function_innards = "\n".join(unparsed_source[2:])
+    else:
+        function_innards = "\n".join(unparsed_source[1:])
     def _get_whitespace(): return whitespace_char*num_whitespace
 
     num_whitespace, whitespace_char = _get_leading(unparsed_source[2])
     docstring = f'\n{_get_whitespace()}"""\n'
+    if isinstance(parsed_source.body[0].body[0].value, ast.Str):
+        _quotes = ("'", '"')
+        docstring += f'{_get_whitespace()}{unparsed_source[1].lstrip(whitespace_char).strip(_quotes[0]).strip(_quotes[1])}\n\n'
     docstring += f'{_get_whitespace()}Parameters\n'
     docstring += f'{_get_whitespace()}----------\n'
     for i, param in enumerate(docs.keys()):
-        if param != "return":
+        if param != "return" and param != "self":
             docstring += f'{_get_whitespace()}{param} : {annos[0][i]}\n'
             docstring += f'{whitespace_char * (num_whitespace+2)}{docs[param]}\n'
     if (annos[-1] != inspect._empty) and ('return' in docs.keys()):
