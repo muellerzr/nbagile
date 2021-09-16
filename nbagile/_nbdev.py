@@ -4,7 +4,7 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"get_annotations": "00_docstring.ipynb",
          "reformat_function": "00_docstring.ipynb",
-         "addition": "99_test.ipynb"}
+         "reformat_class": "00_docstring.ipynb"}
 
 modules = ["docstring.py"]
 
