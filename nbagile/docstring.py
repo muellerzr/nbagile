@@ -55,11 +55,20 @@ def reformat_function(
     def _get_whitespace(): return whitespace_char*num_whitespace
 
     num_whitespace, whitespace_char = _get_leading(unparsed_source[2])
-    docstring = f'\n{_get_whitespace()}"""\n'
+    docstring = f'\n{_get_whitespace()}"""'
     if isinstance(parsed_source.body[0].body[0].value, ast.Str):
         _quotes = ("'", '"')
-        docstring += f'{_get_whitespace()}{unparsed_source[1].lstrip(whitespace_char).strip(_quotes[0]).strip(_quotes[1])}\n\n'
-    docstring += f'{_get_whitespace()}Parameters\n'
+        orig_docstring = unparsed_source[1].lstrip(whitespace_char).strip(_quotes[0]).strip(_quotes[1])
+        orig_docstring = orig_docstring.split('\\n')
+        # Check if this logic can be refactored
+        for line in orig_docstring:
+            if len(line.strip()) > 0:
+                if len(line.lstrip()) < len(line):
+                    diff = len(line) - len(line.lstrip())
+                    docstring += f'\n{whitespace_char * (diff)}{line.lstrip()}'
+                else:
+                    docstring += f'\n{_get_whitespace()}{line.lstrip()}'
+    docstring += f'\n\n{_get_whitespace()}Parameters\n'
     docstring += f'{_get_whitespace()}----------\n'
     for i, param in enumerate(docs.keys()):
         if param != "return" and param != "self":
