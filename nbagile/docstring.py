@@ -68,7 +68,8 @@ def reformat_function(
                     docstring += f'\n{whitespace_char * (diff)}{line.lstrip()}'
                 else:
                     docstring += f'\n{_get_whitespace()}{line.lstrip()}'
-    docstring += f'\n\n{_get_whitespace()}Parameters\n'
+        docstring += "\n"
+    docstring += f'\n{_get_whitespace()}Parameters\n'
     docstring += f'{_get_whitespace()}----------\n'
     for i, param in enumerate(docs.keys()):
         if param != "return" and param != "self":
