@@ -47,20 +47,37 @@ def reformat_function(
         parsed_source.body[0].args.args[i].annotation = None
     parsed_source.body[0].returns = None
     unparsed_source = astunparse.unparse(parsed_source).lstrip('\n').split('\n')
+    has_decorator = False
     if unparsed_source[0].startswith('@'):
+        has_decorator = True
+    if has_decorator:
         function_definition = '\n'.join(unparsed_source[:2])
     else:
         function_definition = unparsed_source[0]
     # Check if we have a docstring
     if isinstance(parsed_source.body[0].body[0].value, ast.Str):
-        function_innards = "\n".join(unparsed_source[2:])
+        if has_decorator:
+            function_innards = "\n".join(unparsed_source[3:])
+        else:
+            function_innards = "\n".join(unparsed_source[2:])
     else:
-        function_innards = "\n".join(unparsed_source[1:])
+        if has_decorator:
+            function_innards = "\n".join(unparsed_source[2:])
+        else:
+            function_innards = "\n".join(unparsed_source[1:])
     def _get_whitespace(): return whitespace_char*num_whitespace
 
-    num_whitespace, whitespace_char = _get_leading(unparsed_source[2])
+    if unparsed_source[2] != '':
+        num_whitespace, whitespace_char = _get_leading(unparsed_source[2])
+    else:
+        if len(unparsed_source) < 4:
+            num_whitespace, whitespace_char = _get_leading(unparsed_source[1])
+        else:
+            num_whitespace, whitespace_char = _get_leading(unparsed_source[3])
+
     docstring = f'\n{_get_whitespace()}"""'
-    if isinstance(parsed_source.body[0].body[0].value, ast.Str):
+    val = parsed_source.body[0].body[0].value if not has_decorator else parsed_source.body[0].body[1].value
+    if isinstance(val, ast.Str):
         _quotes = ("'", '"')
         orig_docstring = unparsed_source[1].lstrip(whitespace_char).strip(_quotes[0]).strip(_quotes[1])
         orig_docstring = orig_docstring.split('\\n')
@@ -79,8 +96,14 @@ def reformat_function(
             param_string += f'{_get_whitespace()}----------\n'
             for i, param in enumerate(docs.keys()):
                 if param != "return" and param != "self" and param != "cls":
-                    param_string += f'{_get_whitespace()}{param} : {annos[0][i]}\n'
-                    param_string += f'{whitespace_char * (num_whitespace+2)}{docs[param]}\n'
+                    param_string += f'{_get_whitespace()}{param}'
+                    if annos[0][i] is not None:
+                        param_string += f' : {annos[0][i]}'
+                    else:
+                        param_string += f' : any'
+                    param_string += '\n'
+                    if docs[param] is not None:
+                        param_string += f'{whitespace_char * (num_whitespace+2)}{docs[param]}\n'
         if param_string != f'\n{_get_whitespace()}Parameters\n{_get_whitespace()}----------\n':
             docstring += param_string
     if (annos[-1] != inspect._empty) and ('return' in docs.keys()):
@@ -94,13 +117,16 @@ def reformat_function(
 # Cell
 def reformat_class(
     source:str, # Source code of a full class
+    recursion_level = 1, # Depth of recursion
 ):
     "Takes messy class code and refactors it into a readable PEP-8 standard style"
     whitespace_char = None
-    def _format_spacing():
+    def _format_spacing(code, num_leading):
+        code = [c for c in code if len(c) > 0]
         for i, c in enumerate(code):
             curr_leading = len(c) - len(c.lstrip())
             code[i] = f'{code[i][0] * (curr_leading-num_leading)}{code[i].lstrip()}'
+        return code
     body = ast.parse(source).body[0].body
     new_source = ''
     function_definition = astunparse.unparse(ast.parse(source)).lstrip('\n').split('\n')[0]
@@ -115,7 +141,16 @@ def reformat_class(
     new_nodes = [function_definition]
 
     for i,node in enumerate(body):
-        if isinstance(node, ast.FunctionDef):
+        if isinstance(node, ast.ClassDef):
+            beginning_lineno = node.lineno
+            split_code = source.split('\n')
+            if i < len(body)-1:
+                ending_lineno = body[i+1].lineno
+                code = split_code[beginning_lineno-1:ending_lineno-1]
+                num_leading = len(code[0]) - len(code[0].lstrip())
+                for i,c in enumerate(code): code[i] = code[i][num_leading:]
+            new_nodes.append(reformat_class('\n'.join(code), recursion_level+1))
+        elif isinstance(node, ast.FunctionDef):
             offset = node.col_offset
             beginning_lineno = node.lineno
             split_code = source.split('\n')
@@ -125,14 +160,15 @@ def reformat_class(
                 if whitespace_char is None:
                     whitespace_char = code[i][0]
                 num_leading = len(code[0]) - len(code[0].lstrip())
-                _format_spacing()
+                code = _format_spacing(code, num_leading)
+
                 new_func = reformat_function('\n'.join(code))
             else:
                 code = split_code[beginning_lineno-1:]
                 if whitespace_char is None:
                     whitespace_char = code[i][0]
                 num_leading = len(code[0]) - len(code[0].lstrip())
-                _format_spacing()
+                code = _format_spacing(code, num_leading)
                 new_func = reformat_function('\n'.join(code))
             new_nodes.append(f'{new_func}')
         else:
@@ -154,15 +190,27 @@ def reformat_class(
             else:
                 new_nodes.append(f'{astunparse.unparse(node).strip()}')
     formatted_source = []
+    num_chars = 4
+    if recursion_level > 1:
+        num_chars += (2*(recursion_level-1)) - 2
+    else:
+        num_chars = 4
     for i,line in enumerate(new_nodes):
         if i == 0:
             formatted_source.append(line)
         elif i == 1:
-            formatted_source.append(line.lstrip('\n'))
+            if not len(line.lstrip()) < len(line):
+                l = line.split('\n')
+                for i,o in enumerate(l):
+                    l[i] = f'{whitespace_char * num_chars}{o}'
+                line = '\n'.join(l)
+                formatted_source.append(line.lstrip('\n'))
+            else:
+                formatted_source.append(line.lstrip('\n'))
         else:
             l = line.split('\n')
             for i,o in enumerate(l):
-                l[i] = f'{whitespace_char * 4}{o}'
+                l[i] = f'{whitespace_char * num_chars}{o}'
             line = '\n'.join(l)
             formatted_source.append(line)
     return '\n'.join(formatted_source)
