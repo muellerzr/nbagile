@@ -10,6 +10,7 @@ __all__ = ['get_annotations', 'reformat_function', 'reformat_class']
 import inspect, ast, astunparse
 #nbdev_comment from __future__ import annotations
 import fastcore.docments as dments
+from collections import OrderedDict
 
 # Cell
 def get_annotations(
@@ -40,13 +41,16 @@ def reformat_function(
 ):
     "Takes messy source code and refactors it into a readable PEP-8 standard style"
     docs = dments.docments(source)
-    annos = get_annotations(source)
     parsed_source = ast.parse(source)
+    annos = get_annotations(source)
     for i in range(len(parsed_source.body[0].args.args)):
         parsed_source.body[0].args.args[i].annotation = None
     parsed_source.body[0].returns = None
     unparsed_source = astunparse.unparse(parsed_source).lstrip('\n').split('\n')
-    function_definition = unparsed_source[0]
+    if unparsed_source[0].startswith('@'):
+        function_definition = '\n'.join(unparsed_source[:2])
+    else:
+        function_definition = unparsed_source[0]
     # Check if we have a docstring
     if isinstance(parsed_source.body[0].body[0].value, ast.Str):
         function_innards = "\n".join(unparsed_source[2:])
@@ -69,12 +73,16 @@ def reformat_function(
                 else:
                     docstring += f'\n{_get_whitespace()}{line.lstrip()}'
         docstring += "\n"
-    docstring += f'\n{_get_whitespace()}Parameters\n'
-    docstring += f'{_get_whitespace()}----------\n'
-    for i, param in enumerate(docs.keys()):
-        if param != "return" and param != "self":
-            docstring += f'{_get_whitespace()}{param} : {annos[0][i]}\n'
-            docstring += f'{whitespace_char * (num_whitespace+2)}{docs[param]}\n'
+    if len(docs.keys()) >= 1:
+        if len(docs.keys()) >= 1:
+            param_string = f'\n{_get_whitespace()}Parameters\n'
+            param_string += f'{_get_whitespace()}----------\n'
+            for i, param in enumerate(docs.keys()):
+                if param != "return" and param != "self" and param != "cls":
+                    param_string += f'{_get_whitespace()}{param} : {annos[0][i]}\n'
+                    param_string += f'{whitespace_char * (num_whitespace+2)}{docs[param]}\n'
+        if param_string != f'\n{_get_whitespace()}Parameters\n{_get_whitespace()}----------\n':
+            docstring += param_string
     if (annos[-1] != inspect._empty) and ('return' in docs.keys()):
         docstring += f'\n{_get_whitespace()}Returns\n'
         docstring += f'{_get_whitespace()}-------\n'
@@ -97,6 +105,15 @@ def reformat_class(
     new_source = ''
     function_definition = astunparse.unparse(ast.parse(source)).lstrip('\n').split('\n')[0]
     new_source += function_definition
+
+    def _get_whitespace(): return whitespace_char*num_whitespace
+    unparsed_source = astunparse.unparse(ast.parse(source)).lstrip('\n').split('\n')
+    num_whitespace, whitespace_char = _get_leading(unparsed_source[2])
+    docstring = f'\n{_get_whitespace()}"""'
+    docstring_len = 0
+    diff = 2
+    new_nodes = [function_definition]
+
     for i,node in enumerate(body):
         if isinstance(node, ast.FunctionDef):
             offset = node.col_offset
@@ -117,11 +134,35 @@ def reformat_class(
                 num_leading = len(code[0]) - len(code[0].lstrip())
                 _format_spacing()
                 new_func = reformat_function('\n'.join(code))
-            new_source += new_func
+            new_nodes.append(f'{new_func}')
         else:
-            new_source += astunparse.unparse(node)
-    new_source = new_source.split('\n')
-    for i,line in enumerate(new_source):
-        if i > 0:
-            new_source[i] = f'{whitespace_char * 2}{line}'
-    return '\n'.join(new_source)
+            if isinstance(node.value, ast.Str) and i == 0:
+                _quotes = ("'", '"')
+                orig_docstring = unparsed_source[1].lstrip(whitespace_char).strip(_quotes[0]).strip(_quotes[1])
+                orig_docstring = orig_docstring.split('\\n')
+                # Check if this logic can be refactored
+                for line in orig_docstring:
+                    if len(line.strip()) > 0:
+                        if len(line.lstrip()) < len(line):
+                            diff = len(line) - len(line.lstrip())
+                            docstring += f'\n{whitespace_char * (diff)}{line.lstrip()}'
+                        else:
+                            docstring += f'\n{_get_whitespace()}{line.lstrip()}'
+                docstring += f'\n{_get_whitespace()}"""'
+                docstring_len = len(docstring.split('\n'))
+                new_nodes.append(docstring)
+            else:
+                new_nodes.append(f'{astunparse.unparse(node).strip()}')
+    formatted_source = []
+    for i,line in enumerate(new_nodes):
+        if i == 0:
+            formatted_source.append(line)
+        elif i == 1:
+            formatted_source.append(line.lstrip('\n'))
+        else:
+            l = line.split('\n')
+            for i,o in enumerate(l):
+                l[i] = f'{whitespace_char * 4}{o}'
+            line = '\n'.join(l)
+            formatted_source.append(line)
+    return '\n'.join(formatted_source)
