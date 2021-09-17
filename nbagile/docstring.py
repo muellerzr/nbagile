@@ -82,13 +82,19 @@ def reformat_function(
         orig_docstring = unparsed_source[1].lstrip(whitespace_char).strip(_quotes[0]).strip(_quotes[1])
         orig_docstring = orig_docstring.split('\\n')
         # Check if this logic can be refactored
-        for line in orig_docstring:
+        for i,line in enumerate(orig_docstring):
             if len(line.strip()) > 0:
                 if len(line.lstrip()) < len(line):
                     diff = len(line) - len(line.lstrip())
-                    docstring += f'\n{whitespace_char * (diff)}{line.lstrip()}'
+                    if i == 0:
+                        docstring += f'{line.lstrip()}'
+                    else:
+                        docstring += f'\n{whitespace_char * (diff)}{line.lstrip()}'
                 else:
-                    docstring += f'\n{_get_whitespace()}{line.lstrip()}'
+                    if i == 0:
+                        docstring += f'{line.lstrip()}'
+                    else:
+                        docstring += f'\n{_get_whitespace()}{line.lstrip()}'
         docstring += "\n"
     if len(docs.keys()) >= 1:
         if len(docs.keys()) >= 1:
@@ -161,7 +167,6 @@ def reformat_class(
                     whitespace_char = code[i][0]
                 num_leading = len(code[0]) - len(code[0].lstrip())
                 code = _format_spacing(code, num_leading)
-
                 new_func = reformat_function('\n'.join(code))
             else:
                 code = split_code[beginning_lineno-1:]
