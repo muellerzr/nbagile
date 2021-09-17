@@ -76,10 +76,9 @@ def reformat_function(
             num_whitespace, whitespace_char = _get_leading(unparsed_source[3])
 
     docstring = f'\n{_get_whitespace()}"""'
-    val = parsed_source.body[0].body[0].value if not has_decorator else parsed_source.body[0].body[1].value
-    if isinstance(val, ast.Str):
+    if isinstance(parsed_source.body[0].body[0].value, ast.Str):
         _quotes = ("'", '"')
-        orig_docstring = unparsed_source[1].lstrip(whitespace_char).strip(_quotes[0]).strip(_quotes[1])
+        orig_docstring = astunparse.unparse(parsed_source.body[0].body[0]).lstrip(whitespace_char).replace(_quotes[0],'').replace(_quotes[1],'')
         orig_docstring = orig_docstring.split('\\n')
         # Check if this logic can be refactored
         for i,line in enumerate(orig_docstring):
@@ -95,7 +94,6 @@ def reformat_function(
                         docstring += f'{line.lstrip()}'
                     else:
                         docstring += f'\n{_get_whitespace()}{line.lstrip()}'
-        docstring += "\n"
     if len(docs.keys()) >= 1:
         if len(docs.keys()) >= 1:
             param_string = f'\n{_get_whitespace()}Parameters\n'
@@ -190,8 +188,15 @@ def reformat_class(
                         else:
                             docstring += f'\n{_get_whitespace()}{line.lstrip()}'
                 docstring += f'\n{_get_whitespace()}"""'
-                docstring_len = len(docstring.split('\n'))
-                new_nodes.append(docstring)
+                full_string = docstring.split('\n')
+                new_string = ''
+                if len(full_string) == 4:
+                    for i, line in enumerate(full_string):
+                        new_string += line.lstrip()
+                else:
+                    new_string = '\n'.join(full_string)
+                docstring_len = len(new_string.split('\n'))
+                new_nodes.append(new_string)
             else:
                 new_nodes.append(f'{astunparse.unparse(node).strip()}')
     formatted_source = []

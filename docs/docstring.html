@@ -308,7 +308,8 @@ nb_path: "00_docstring.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;def addition(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;@delegates()</span>
+<span class="s2">def addition(</span>
 <span class="s2">    a:(int, float), # The first number to add</span>
 <span class="s2">    # The second number to add</span>
 <span class="s2">    b:int = 2,</span>
@@ -345,7 +346,8 @@ nb_path: "00_docstring.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>def addition(
+<pre>@delegates()
+def addition(
     a:(int, float), # The first number to add
     # The second number to add
     b:int = 2,
@@ -383,7 +385,8 @@ nb_path: "00_docstring.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>def addition(a, b=2):
+<pre>@delegates()
+def addition(a, b=2):
     &#34;&#34;&#34;Adds two numbers together
 
     Parameters
@@ -424,7 +427,7 @@ nb_path: "00_docstring.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="reformat_class" class="doc_header"><code>reformat_class</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L124" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_class</code>(<strong><code>source</code></strong>:<code>str</code>, <strong><code>recursion_level</code></strong>=<em><code>1</code></em>)</p>
+<h4 id="reformat_class" class="doc_header"><code>reformat_class</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L122" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_class</code>(<strong><code>source</code></strong>:<code>str</code>, <strong><code>recursion_level</code></strong>=<em><code>1</code></em>)</p>
 </blockquote>
 <p>Takes messy class code and refactors it into a readable PEP-8 standard style</p>
 
@@ -496,51 +499,6 @@ nb_path: "00_docstring.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">reformat_function</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;@typedispatch</span>
-<span class="s2">def add(</span>
-<span class="s2">    self</span>
-<span class="s2">) -&gt; (int,float): # Sum of a and b</span>
-<span class="s2">    &quot;Adds self.a and self.b&quot;</span>
-<span class="s2">    return self.a + self.b&quot;&quot;&quot;</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>@typedispatch
-def add(self):
-    &#34;&#34;&#34;
-    Returns
-    -------
-    (int, float)
-      Sum of a and b
-    &#34;&#34;&#34;
-    return (self.a + self.b)
-
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">reformat_class</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
 </pre></div>
 
@@ -555,9 +513,7 @@ def add(self):
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>class Arithmetic():
-    &#34;&#34;&#34;
-    A class that can perform basic arithmetic on ops
-    &#34;&#34;&#34;
+    &#34;&#34;&#34;A class that can perform basic arithmetic on ops&#34;&#34;&#34;
     _o = 2
     _b = 5
     _c = 3
@@ -585,7 +541,8 @@ def add(self):
     
     @typedispatch
     def add(self):
-        &#34;&#34;&#34;
+        &#34;&#34;&#34;Adds self.a and self.b
+    
         Returns
         -------
         (int, float)
