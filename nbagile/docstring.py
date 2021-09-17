@@ -12,6 +12,8 @@ import inspect, ast, astunparse
 import fastcore.docments as dments
 from collections import OrderedDict
 
+from fastcore.xtras import risinstance
+
 # Cell
 def get_annotations(
     source:str # Source code of function or class
@@ -118,78 +120,78 @@ def reformat_function(
 # Cell
 def reformat_class(
     source:str, # Source code of a full class
-    recursion_level = 1, # Depth of recursion
+    recursion_level:int = 1, # Depth of recursion
 ):
     "Takes messy class code and refactors it into a readable PEP-8 standard style"
     whitespace_char = None
     def _format_spacing(code, num_leading):
         code = [c for c in code if len(c) > 0]
-        for i, c in enumerate(code):
+        def _inner(c, num_leading):
             curr_leading = len(c) - len(c.lstrip())
-            code[i] = f'{code[i][0] * (curr_leading-num_leading)}{code[i].lstrip()}'
-        return code
-    body = ast.parse(source).body[0].body
+            return f'{c[0] * (curr_leading - num_leading)}{c.lstrip()}'
+        return apply(_inner, code, num_leading=num_leading)
+    # Parse source code and get body
+    parsed_source = ast.parse(source)
+    body = parsed_source.body[0].body
     new_source = ''
-    function_definition = astunparse.unparse(ast.parse(source)).lstrip('\n').split('\n')[0]
-    new_source += function_definition
 
-    def _get_whitespace(): return whitespace_char*num_whitespace
-    unparsed_source = astunparse.unparse(ast.parse(source)).lstrip('\n').split('\n')
+    unparsed_source = astunparse.unparse(parsed_source).lstrip('\n').split('\n')
+
+    # Add function definition
+    new_source += unparsed_source[0]
+
+    def _get_whitespace(): return whitespace_char * num_whitespace
+
     num_whitespace, whitespace_char = _get_leading(unparsed_source[2])
-    docstring = f'\n{_get_whitespace()}"""'
-    docstring_len = 0
-    diff = 2
-    new_nodes = [function_definition]
 
-    for i,node in enumerate(body):
-        if isinstance(node, ast.ClassDef):
+    docstring = f'\n{_get_whitespace()}"""'
+    docstring_len, diff = 0,2
+
+    new_nodes = [unparsed_source[0]]
+
+    for i, node in enumerate(body):
+        if risinstance((ast.ClassDef, ast.FunctionDef), node):
             beginning_lineno = node.lineno
             split_code = source.split('\n')
-            if i < len(body)-1:
+            if i < (len(body) - 1):
                 ending_lineno = body[i+1].lineno
                 code = split_code[beginning_lineno-1:ending_lineno-1]
                 num_leading = len(code[0]) - len(code[0].lstrip())
-                for i,c in enumerate(code): code[i] = code[i][num_leading:]
-            new_nodes.append(reformat_class('\n'.join(code), recursion_level+1))
-        elif isinstance(node, ast.FunctionDef):
-            offset = node.col_offset
-            beginning_lineno = node.lineno
-            split_code = source.split('\n')
-            if i < len(body)-1:
-                ending_lineno = body[i+1].lineno
-                code = split_code[beginning_lineno-1:ending_lineno-1]
-                if whitespace_char is None:
-                    whitespace_char = code[i][0]
-                num_leading = len(code[0]) - len(code[0].lstrip())
-                code = _format_spacing(code, num_leading)
-                new_func = reformat_function('\n'.join(code))
+                if isinstance(node, ast.ClassDef):
+                    for i,c in enumerate(code): code[i] = code[i][num_leading:]
+                    new_nodes.append(reformat_class('\n'.join(code), recursion_level+1))
+                else:
+                    if whitespace_char is None:
+                        whitespace_char = code[i][0]
+                    code = _format_spacing(code, num_leading)
+                    new_nodes.append(reformat_function('\n'.join(code)))
             else:
                 code = split_code[beginning_lineno-1:]
                 if whitespace_char is None:
                     whitespace_char = code[i][0]
                 num_leading = len(code[0]) - len(code[0].lstrip())
                 code = _format_spacing(code, num_leading)
-                new_func = reformat_function('\n'.join(code))
-            new_nodes.append(f'{new_func}')
+                new_nodes.append(reformat_function('\n'.join(code)))
         else:
-            if isinstance(node.value, ast.Str) and i == 0:
+            if isinstance(body[0].value, ast.Str) and i == 0:
                 _quotes = ("'", '"')
-                orig_docstring = unparsed_source[1].lstrip(whitespace_char).strip(_quotes[0]).strip(_quotes[1])
+                orig_docstring = astunparse.unparse(body[0]).lstrip(whitespace_char).replace(_quotes[0],'').replace(_quotes[1],'')
                 orig_docstring = orig_docstring.split('\\n')
-                # Check if this logic can be refactored
-                for line in orig_docstring:
-                    if len(line.strip()) > 0:
-                        if len(line.lstrip()) < len(line):
-                            diff = len(line) - len(line.lstrip())
-                            docstring += f'\n{whitespace_char * (diff)}{line.lstrip()}'
-                        else:
-                            docstring += f'\n{_get_whitespace()}{line.lstrip()}'
+                def _inner(line, whitespace_char):
+                    diff = len(line) - len(line.lstrip())
+                    whitespace = whitespace_char * diff if diff > 0 else _get_whitespace()
+                    return f'\n{whitespace}{line}'
+
+                o = apply(_inner, orig_docstring, whitespace_char=whitespace_char)
+                o[0] = orig_docstring[0].lstrip()
+                docstring +=  '\n'.join(o)
                 docstring += f'\n{_get_whitespace()}"""'
                 full_string = docstring.split('\n')
                 new_string = ''
+
                 if len(full_string) == 4:
-                    for i, line in enumerate(full_string):
-                        new_string += line.lstrip()
+                    new_string = apply(lambda x: x.lstrip(), full_string)
+                    new_string = ''.join(new_string)
                 else:
                     new_string = '\n'.join(full_string)
                 docstring_len = len(new_string.split('\n'))
@@ -200,24 +202,19 @@ def reformat_class(
     num_chars = 4
     if recursion_level > 1:
         num_chars += (2*(recursion_level-1)) - 2
-    else:
-        num_chars = 4
-    for i,line in enumerate(new_nodes):
-        if i == 0:
-            formatted_source.append(line)
-        elif i == 1:
-            if not len(line.lstrip()) < len(line):
-                l = line.split('\n')
-                for i,o in enumerate(l):
-                    l[i] = f'{whitespace_char * num_chars}{o}'
-                line = '\n'.join(l)
-                formatted_source.append(line.lstrip('\n'))
-            else:
-                formatted_source.append(line.lstrip('\n'))
-        else:
-            l = line.split('\n')
-            for i,o in enumerate(l):
-                l[i] = f'{whitespace_char * num_chars}{o}'
-            line = '\n'.join(l)
-            formatted_source.append(line)
+
+    formatted_source.append(new_nodes[0])
+    line = new_nodes[1]
+    if not len(line.lstrip()) < len(line):
+        line = line.split('\n')
+        line = apply(lambda x: f'{whitespace_char * num_chars}{x}', line)
+        line = '\n'.join(line)
+    formatted_source.append(line.lstrip('\n'))
+
+    for i,line in enumerate(new_nodes[2:]):
+        l = line.split('\n')
+        for i,o in enumerate(l):
+            l[i] = f'{whitespace_char * num_chars}{o}'
+        line = '\n'.join(l)
+        formatted_source.append(line)
     return '\n'.join(formatted_source)
