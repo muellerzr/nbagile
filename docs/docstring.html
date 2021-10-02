@@ -207,9 +207,13 @@ nb_path: "00_docstring.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_annotations" class="doc_header"><code>get_annotations</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_annotations</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
+<h4 id="get_annotations" class="doc_header"><code>get_annotations</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_annotations</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
 </blockquote>
 <p>Extracts the type annotations from source code</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong><code>source</code></strong> : <em><code>str</code></em>   <p>Source code of function or class</p></li>
+</ul>
 
 </div>
 
@@ -272,6 +276,505 @@ nb_path: "00_docstring.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">testme</span><span class="p">(</span><span class="n">anno</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">anno</span> <span class="ow">or</span> <span class="s1">&#39;any&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">testme</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>any
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">o</span><span class="p">():</span>
+    <span class="n">param_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="n">_get_whitespace</span><span class="p">()</span><span class="si">}</span><span class="s1">Parameters</span><span class="se">\n</span><span class="si">{</span><span class="n">_get_whitespace</span><span class="p">()</span><span class="si">}</span><span class="s1">----------</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">def</span> <span class="nf">_inner</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">anno</span><span class="p">):</span>
+        <span class="n">param_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">param</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;return&#39;</span><span class="p">,</span> <span class="s1">&#39;self&#39;</span><span class="p">,</span> <span class="s1">&#39;cls&#39;</span><span class="p">]:</span>
+            <span class="n">param_string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_get_whitespace</span><span class="p">()</span><span class="si">}{</span><span class="n">param</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">param_string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39; : </span><span class="si">{</span><span class="n">anno</span> <span class="ow">or</span> <span class="s2">&quot;any&quot;</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">docs</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">param_string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">whitespace_char</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_whitespace</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="si">}{</span><span class="n">docs</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="n">param_string</span>
+    
+    <span class="n">o</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">_inner</span><span class="p">,</span> <span class="n">docks</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">annos</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">param_string</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">param_string</span> <span class="o">!=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="n">_get_whitespace</span><span class="p">()</span><span class="si">}</span><span class="s1">Parameters</span><span class="se">\n</span><span class="si">{</span><span class="n">_get_whitespace</span><span class="p">()</span><span class="si">}</span><span class="s1">----------</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">:</span>
+        <span class="n">docstring</span> <span class="o">+=</span> <span class="n">param_string</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ComplexityVisitor</span><span class="o">.</span><span class="n">from_code</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">o</span><span class="p">))</span><span class="o">.</span><span class="n">functions</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[Function(name=&#39;o&#39;, lineno=1, col_offset=0, endline=16, is_method=False, classname=None, closures=[Function(name=&#39;_inner&#39;, lineno=3, col_offset=4, endline=11, is_method=False, classname=None, closures=[], complexity=4)], complexity=2)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_quotes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">orig_docstring</span> <span class="o">=</span> <span class="n">astunparse</span><span class="o">.</span><span class="n">unparse</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">_quotes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">_quotes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">orig_docstring</span> <span class="o">=</span> <span class="n">orig_docstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">n&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">o</span><span class="p">(</span><span class="n">orig_docstring</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;\n \nAdds two numbers together\n&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">o</span><span class="p">(</span><span class="n">orig_docstring</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;\n \nAdds two numbers together\n&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ComplexityVisitor</span><span class="o">.</span><span class="n">from_code</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">o</span><span class="p">))</span><span class="o">.</span><span class="n">functions</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[Function(name=&#39;o&#39;, lineno=1, col_offset=0, endline=11, is_method=False, classname=None, closures=[], complexity=6)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ComplexityVisitor</span><span class="o">.</span><span class="n">from_code</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">o</span><span class="p">))</span><span class="o">.</span><span class="n">functions</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[Function(name=&#39;o&#39;, lineno=1, col_offset=0, endline=14, is_method=False, classname=None, closures=[], complexity=6)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="s2">&quot;Apply `func` recursively to `x`, passing on args&quot;</span>
+    <span class="k">if</span> <span class="n">is_listy</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)([</span><span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="nb">dict</span><span class="p">):</span>  <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">p_source</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">p_source</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;_ast.arg at 0x7f27ed9e3438&gt;, &lt;_ast.arg at 0x7f27ed9e3e10&gt;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;@typedispatch</span>
+<span class="s2">def o(): </span>
+<span class="s2">    for i in range(len(parsed_source.body[0].args.args)):</span>
+<span class="s2">        parsed_source.body[0].args.args[i].annotation = None&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decorator_list</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;_ast.Name at 0x7f27ed989198&gt;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ComplexityVisitor</span><span class="o">.</span><span class="n">from_code</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;@typedispatch</span>
+<span class="s2">def o(): </span>
+<span class="s2">    for i in range(len(parsed_source.body[0].args.args)):</span>
+<span class="s2">        parsed_source.body[0].args.args[i].annotation = None&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">functions</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[Function(name=&#39;o&#39;, lineno=1, col_offset=0, endline=4, is_method=False, classname=None, closures=[], complexity=2)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<span class="n">p_source</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;annotation&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">p_source</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>33.5 µs ± 2.87 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<span class="n">p_source</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p_source</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span><span class="p">)):</span>
+        <span class="n">p_source</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">annotation</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>22.1 µs ± 1.26 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
 <div class="output">
@@ -280,9 +783,13 @@ nb_path: "00_docstring.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="reformat_function" class="doc_header"><code>reformat_function</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L39" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_function</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
+<h4 id="reformat_function" class="doc_header"><code>reformat_function</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L44" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_function</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
 </blockquote>
 <p>Takes messy source code and refactors it into a readable PEP-8 standard style</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong><code>source</code></strong> : <em><code>str</code></em>   <p>Source code</p></li>
+</ul>
 
 </div>
 
@@ -427,9 +934,16 @@ def addition(a, b=2):
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="reformat_class" class="doc_header"><code>reformat_class</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L122" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_class</code>(<strong><code>source</code></strong>:<code>str</code>, <strong><code>recursion_level</code></strong>=<em><code>1</code></em>)</p>
+<h4 id="reformat_class" class="doc_header"><code>reformat_class</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L121" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_class</code>(<strong><code>source</code></strong>:<code>str</code>, <strong><code>recursion_level</code></strong>:<code>int</code>=<em><code>1</code></em>)</p>
 </blockquote>
 <p>Takes messy class code and refactors it into a readable PEP-8 standard style</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong><code>source</code></strong> : <em><code>str</code></em>   <p>Source code of a full class</p></li>
+</ul>
+<ul>
+<li><strong><code>recursion_level</code></strong> : <em><code>int</code></em>, <em>optional</em>  <p>Depth of recursion</p></li>
+</ul>
 
 </div>
 
@@ -560,13 +1074,6 @@ def addition(a, b=2):
 </div>
     {% endraw %}
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>For classes we'll need to extract functions and constants, and only reformat the functions in each class</p>
-
-</div>
-</div>
-</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
