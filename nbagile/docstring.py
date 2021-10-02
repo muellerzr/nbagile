@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 
-__all__ = ['get_annotations', 'reformat_function', 'reformat_class']
+__all__ = ['get_annotations', 'apply', 'reformat_function', 'reformat_class']
 
 # Cell
 import inspect, ast, astunparse
@@ -12,7 +12,9 @@ import inspect, ast, astunparse
 import fastcore.docments as dments
 from collections import OrderedDict
 
-from fastcore.xtras import risinstance
+from fastcore.basics import risinstance
+from fastcore.dispatch import retain_type
+from fastcore.xtras import is_listy
 
 # Cell
 def get_annotations(
@@ -38,7 +40,17 @@ def _get_leading(o):
     return len(o) - len(o.lstrip(o[0])), o[0]
 
 # Cell
-from fastcore.xtras import is_listy
+def apply(
+    func:callable, # A callable function
+    x:any, # Something to apply `func` on
+    *args, # Arguments for func
+    **kwargs # Kwargs for func
+):
+    "Apply `func` recursively to `x`, passing on args. Originally from fastai.torch_core"
+    if is_listy(x): return type(x)([apply(func, o, *args, **kwargs) for o in x])
+    if isinstance(x,dict):  return {k: apply(func, v, *args, **kwargs) for k,v in x.items()}
+    res = func(x, *args, **kwargs)
+    return res if x is None else retain_type(res, x)
 
 # Cell
 def reformat_function(
