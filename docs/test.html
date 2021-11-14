@@ -26,71 +26,18 @@ nb_path: "99_test.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-</div>
-    {% endraw %}
+<div class="output_wrapper">
+<div class="output">
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The goal of this module is to take code that looks like the following:</p>
+<div class="output_area">
 
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">addition</span><span class="p">(</span>
-    <span class="n">a</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="c1"># The first number to add</span>
-    <span class="n">b</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="c1"># The second number to add</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span> <span class="c1"># The sum of a and b</span>
-    <span class="s2">&quot;Adds two numbers together&quot;</span>
-    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
-</pre></div>
-
-    </div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/mnt/d/jupyter/anaconda3/envs/nbagile/lib/python3.7/site-packages/fastprogress/fastprogress.py:102: UserWarning: Couldn&#39;t import ipywidgets properly, progress bar will use console behavior
+  warn(&#34;Couldn&#39;t import ipywidgets properly, progress bar will use console behavior&#34;)
+</pre>
 </div>
 </div>
 
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>And convert it to be the following:</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">addition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Adds two numbers together</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ---------</span>
-<span class="sd">    a : int</span>
-<span class="sd">        The first number to add</span>
-<span class="sd">    b : int</span>
-<span class="sd">        The second number to add</span>
-<span class="sd">        </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    int</span>
-<span class="sd">        The sum of a and b</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-</pre></div>
-
-    </div>
 </div>
 </div>
 
@@ -100,102 +47,37 @@ nb_path: "99_test.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nb</span> <span class="o">=</span> <span class="p">[{</span>
-   <span class="s2">&quot;cell_type&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;execution_count&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-   <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{},</span>
-   <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="p">[],</span>
-   <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="s2">&quot;#export</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;def addition(</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;    a:int, # The first number to add</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;    b:int, # The second number to add</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;) -&gt; int: # The sum of a and b</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;    </span><span class="se">\&quot;</span><span class="s2">Adds two numbers together</span><span class="se">\&quot;\n</span><span class="s2">&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;    return a+b&quot;</span>
-   <span class="p">]</span>
-  <span class="p">}]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">nbdev.export</span> <span class="k">as</span> <span class="nn">exp</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># cells = [(i,c,e) for i,(c,e) in enumerate(zip(nb[&#39;cells&#39;],exports)) if e is not None]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
 <div class="output_area">
 
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-17-bb3745d36eb0&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>exports <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>exp<span class="ansi-blue-fg">.</span>is_export<span class="ansi-blue-fg">(</span>c<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;#default_exp&#39;</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> c <span class="ansi-green-fg">in</span> nb<span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> cells <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">(</span>i<span class="ansi-blue-fg">,</span>c<span class="ansi-blue-fg">,</span>e<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> i<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">(</span>c<span class="ansi-blue-fg">,</span>e<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">in</span> enumerate<span class="ansi-blue-fg">(</span>zip<span class="ansi-blue-fg">(</span>nb<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#39;cells&#39;</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span>exports<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> e <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">]</span>
 
-<span class="ansi-green-fg">&lt;ipython-input-17-bb3745d36eb0&gt;</span> in <span class="ansi-cyan-fg">&lt;listcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>exports <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>exp<span class="ansi-blue-fg">.</span>is_export<span class="ansi-blue-fg">(</span>c<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;#default_exp&#39;</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> c <span class="ansi-green-fg">in</span> nb<span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> cells <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">(</span>i<span class="ansi-blue-fg">,</span>c<span class="ansi-blue-fg">,</span>e<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> i<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">(</span>c<span class="ansi-blue-fg">,</span>e<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">in</span> enumerate<span class="ansi-blue-fg">(</span>zip<span class="ansi-blue-fg">(</span>nb<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#39;cells&#39;</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span>exports<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> e <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">]</span>
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="printme" class="doc_header"><code>printme</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/testing.py#L3" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>printme</code>(<strong><code>o</code></strong>:<code>str</code>)</p>
+</blockquote>
+<p>Prints <code>o</code> fancily</p>
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>o : str
+  Some input</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong><code>o</code></strong> : <em><code>&lt;class 'str'&gt;</code></em></li>
+</ul>
 
-<span class="ansi-green-fg">/mnt/d/lib/python3.7/site-packages/nbdev/export.py</span> in <span class="ansi-cyan-fg">is_export</span><span class="ansi-blue-fg">(cell, default)</span>
-<span class="ansi-green-intense-fg ansi-bold">     71</span> <span class="ansi-green-fg">def</span> is_export<span class="ansi-blue-fg">(</span>cell<span class="ansi-blue-fg">,</span> default<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     72</span>     <span class="ansi-blue-fg">&#34;Check if `cell` is to be exported and returns the name of the module to export it if provided&#34;</span>
-<span class="ansi-green-fg">---&gt; 73</span><span class="ansi-red-fg">     </span>tst <span class="ansi-blue-fg">=</span> check_re<span class="ansi-blue-fg">(</span>cell<span class="ansi-blue-fg">,</span> _re_blank_export<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     74</span>     <span class="ansi-green-fg">if</span> tst<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     75</span>         <span class="ansi-green-fg">if</span> default <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">/mnt/d/lib/python3.7/site-packages/nbdev/export.py</span> in <span class="ansi-cyan-fg">check_re</span><span class="ansi-blue-fg">(cell, pat, code_only)</span>
-<span class="ansi-green-intense-fg ansi-bold">     23</span>     <span class="ansi-green-fg">if</span> code_only <span class="ansi-green-fg">and</span> cell<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#39;cell_type&#39;</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">!=</span> <span class="ansi-blue-fg">&#39;code&#39;</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">return</span>
-<span class="ansi-green-intense-fg ansi-bold">     24</span>     <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>pat<span class="ansi-blue-fg">,</span> str<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> pat <span class="ansi-blue-fg">=</span> re<span class="ansi-blue-fg">.</span>compile<span class="ansi-blue-fg">(</span>pat<span class="ansi-blue-fg">,</span> re<span class="ansi-blue-fg">.</span>IGNORECASE <span class="ansi-blue-fg">|</span> re<span class="ansi-blue-fg">.</span>MULTILINE<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">---&gt; 25</span><span class="ansi-red-fg">     </span>cell_source <span class="ansi-blue-fg">=</span> cell<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#39;source&#39;</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">.</span>replace<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;\r&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;&#39;</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># Eliminate \r\n</span>
-<span class="ansi-green-intense-fg ansi-bold">     26</span>     result <span class="ansi-blue-fg">=</span> pat<span class="ansi-blue-fg">.</span>search<span class="ansi-blue-fg">(</span>cell_source<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     27</span>     <span class="ansi-green-fg">return</span> result
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;list&#39; object has no attribute &#39;replace&#39;</pre>
 </div>
+
 </div>
 
 </div>
 </div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}

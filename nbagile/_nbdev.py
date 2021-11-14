@@ -5,9 +5,14 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 index = {"get_annotations": "00_docstring.ipynb",
          "apply": "00_docstring.ipynb",
          "reformat_function": "00_docstring.ipynb",
-         "reformat_class": "00_docstring.ipynb"}
+         "reformat_class": "00_docstring.ipynb",
+         "clean_file": "00_docstring.ipynb",
+         "nbagile_build_lib": "00_docstring.ipynb",
+         "nbagile_diff_nbs": "00_docstring.ipynb",
+         "printme": "99_test.ipynb"}
 
-modules = ["docstring.py"]
+modules = ["docstring.py",
+           "testing.py"]
 
 doc_url = "https://muellerzr.github.io/nbagile/"
 

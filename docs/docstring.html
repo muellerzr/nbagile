@@ -26,6 +26,21 @@ nb_path: "00_docstring.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/mnt/d/jupyter/anaconda3/envs/nbagile/lib/python3.7/site-packages/fastprogress/fastprogress.py:102: UserWarning: Couldn&#39;t import ipywidgets properly, progress bar will use console behavior
+  warn(&#34;Couldn&#39;t import ipywidgets properly, progress bar will use console behavior&#34;)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -100,68 +115,6 @@ nb_path: "00_docstring.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">nbdev.export</span> <span class="k">as</span> <span class="nn">exp</span>
-<span class="n">nb</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">read_nb</span><span class="p">(</span><span class="s1">&#39;99_test.ipynb&#39;</span><span class="p">)</span>
-<span class="n">default</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">find_default_export</span><span class="p">(</span><span class="n">nb</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">])</span>
-<span class="n">mod</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">get_nbdev_module</span><span class="p">()</span>
-<span class="n">exports</span> <span class="o">=</span> <span class="p">[</span><span class="n">exp</span><span class="o">.</span><span class="n">is_export</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">nb</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">]]</span>
-<span class="n">cells</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,(</span><span class="n">c</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">nb</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">],</span><span class="n">exports</span><span class="p">))</span> <span class="k">if</span> <span class="n">e</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
-<span class="n">flag_lines</span><span class="p">,</span> <span class="n">code_lines</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">split_flags_and_code</span><span class="p">(</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">code_lines</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">_deal_import</span><span class="p">(</span><span class="n">code_lines</span><span class="p">,</span> <span class="s1">&#39;docstring.py&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">code_lines</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&#39;def addition(&#39;,
- &#39;    a:int, # The first number to add&#39;,
- &#39;    b:int, # The second number to add&#39;,
- &#39;) -&gt; int: # The sum of a and b&#39;,
- &#39;    &#34;Adds two numbers together&#34;&#39;,
- &#39;    return a+b&#39;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}
@@ -207,12 +160,14 @@ nb_path: "00_docstring.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_annotations" class="doc_header"><code>get_annotations</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_annotations</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
+<h4 id="get_annotations" class="doc_header"><code>get_annotations</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L14" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_annotations</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
 </blockquote>
 <p>Extracts the type annotations from source code</p>
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>source : str
+  Source code of function or class</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><strong><code>source</code></strong> : <em><code>str</code></em>   <p>Source code of function or class</p></li>
+<li><strong><code>source</code></strong> : <em><code>str</code></em></li>
 </ul>
 
 </div>
@@ -276,97 +231,6 @@ nb_path: "00_docstring.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">testme</span><span class="p">(</span><span class="n">anno</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">anno</span> <span class="ow">or</span> <span class="s1">&#39;any&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">testme</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>any
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">o</span><span class="p">():</span>
-    <span class="n">param_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="n">_get_whitespace</span><span class="p">()</span><span class="si">}</span><span class="s1">Parameters</span><span class="se">\n</span><span class="si">{</span><span class="n">_get_whitespace</span><span class="p">()</span><span class="si">}</span><span class="s1">----------</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="k">def</span> <span class="nf">_inner</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">anno</span><span class="p">):</span>
-        <span class="n">param_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">param</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;return&#39;</span><span class="p">,</span> <span class="s1">&#39;self&#39;</span><span class="p">,</span> <span class="s1">&#39;cls&#39;</span><span class="p">]:</span>
-            <span class="n">param_string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_get_whitespace</span><span class="p">()</span><span class="si">}{</span><span class="n">param</span><span class="si">}</span><span class="s1">&#39;</span>
-            <span class="n">param_string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39; : </span><span class="si">{</span><span class="n">anno</span> <span class="ow">or</span> <span class="s2">&quot;any&quot;</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">docs</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">param_string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">whitespace_char</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_whitespace</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="si">}{</span><span class="n">docs</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
-        <span class="k">return</span> <span class="n">param_string</span>
-    
-    <span class="n">o</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">_inner</span><span class="p">,</span> <span class="n">docks</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">annos</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">param_string</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">param_string</span> <span class="o">!=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="n">_get_whitespace</span><span class="p">()</span><span class="si">}</span><span class="s1">Parameters</span><span class="se">\n</span><span class="si">{</span><span class="n">_get_whitespace</span><span class="p">()</span><span class="si">}</span><span class="s1">----------</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">:</span>
-        <span class="n">docstring</span> <span class="o">+=</span> <span class="n">param_string</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ComplexityVisitor</span><span class="o">.</span><span class="n">from_code</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">o</span><span class="p">))</span><span class="o">.</span><span class="n">functions</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
@@ -374,77 +238,26 @@ nb_path: "00_docstring.ipynb"
 <div class="output_area">
 
 
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="apply" class="doc_header"><code>apply</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L47" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>apply</code>(<strong><code>func</code></strong>:<code>callable</code>, <strong><code>x</code></strong>:<code>any</code>, <strong>*<code>args</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
+</blockquote>
+<p>Apply <code>func</code> recursively to <code>x</code>, passing on args. Originally from fastai.torch_core</p>
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>func : callable
+  A callable function
+x : any
+  Something to apply <code>func</code> on</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong><code>func</code></strong> : <em><code>callable</code></em></p>
+</li>
+<li><p><strong><code>x</code></strong> : <em><code>any</code></em></p>
+</li>
+<li><p><strong><code>args</code></strong> : <em><code>&lt;class 'inspect._empty'&gt;</code></em></p>
+</li>
+<li><p><strong><code>kwargs</code></strong> : <em><code>&lt;class 'inspect._empty'&gt;</code></em></p>
+</li>
+</ul>
 
-<div class="output_text output_subarea output_execute_result">
-<pre>[Function(name=&#39;o&#39;, lineno=1, col_offset=0, endline=16, is_method=False, classname=None, closures=[Function(name=&#39;_inner&#39;, lineno=3, col_offset=4, endline=11, is_method=False, classname=None, closures=[], complexity=4)], complexity=2)]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_quotes</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">orig_docstring</span> <span class="o">=</span> <span class="n">astunparse</span><span class="o">.</span><span class="n">unparse</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">)</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">_quotes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">_quotes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-<span class="n">orig_docstring</span> <span class="o">=</span> <span class="n">orig_docstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">n&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">o</span><span class="p">(</span><span class="n">orig_docstring</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;\n \nAdds two numbers together\n&#39;</pre>
 </div>
 
 </div>
@@ -458,316 +271,6 @@ nb_path: "00_docstring.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">o</span><span class="p">(</span><span class="n">orig_docstring</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;\n \nAdds two numbers together\n&#39;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ComplexityVisitor</span><span class="o">.</span><span class="n">from_code</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">o</span><span class="p">))</span><span class="o">.</span><span class="n">functions</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[Function(name=&#39;o&#39;, lineno=1, col_offset=0, endline=11, is_method=False, classname=None, closures=[], complexity=6)]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ComplexityVisitor</span><span class="o">.</span><span class="n">from_code</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">o</span><span class="p">))</span><span class="o">.</span><span class="n">functions</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[Function(name=&#39;o&#39;, lineno=1, col_offset=0, endline=14, is_method=False, classname=None, closures=[], complexity=6)]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="s2">&quot;Apply `func` recursively to `x`, passing on args&quot;</span>
-    <span class="k">if</span> <span class="n">is_listy</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)([</span><span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="nb">dict</span><span class="p">):</span>  <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">apply</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">res</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">p_source</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">p_source</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&lt;_ast.arg at 0x7f27ed9e3438&gt;, &lt;_ast.arg at 0x7f27ed9e3e10&gt;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;@typedispatch</span>
-<span class="s2">def o(): </span>
-<span class="s2">    for i in range(len(parsed_source.body[0].args.args)):</span>
-<span class="s2">        parsed_source.body[0].args.args[i].annotation = None&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decorator_list</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&lt;_ast.Name at 0x7f27ed989198&gt;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ComplexityVisitor</span><span class="o">.</span><span class="n">from_code</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;@typedispatch</span>
-<span class="s2">def o(): </span>
-<span class="s2">    for i in range(len(parsed_source.body[0].args.args)):</span>
-<span class="s2">        parsed_source.body[0].args.args[i].annotation = None&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">functions</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[Function(name=&#39;o&#39;, lineno=1, col_offset=0, endline=4, is_method=False, classname=None, closures=[], complexity=2)]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
-<span class="n">p_source</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;annotation&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">p_source</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>33.5 µs ± 2.87 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
-<span class="n">p_source</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p_source</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span><span class="p">)):</span>
-        <span class="n">p_source</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">annotation</span> <span class="o">=</span> <span class="kc">None</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>22.1 µs ± 1.26 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
 
 </div>
     {% endraw %}
@@ -783,12 +286,14 @@ nb_path: "00_docstring.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="reformat_function" class="doc_header"><code>reformat_function</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L44" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_function</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
+<h4 id="reformat_function" class="doc_header"><code>reformat_function</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L64" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_function</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
 </blockquote>
 <p>Takes messy source code and refactors it into a readable PEP-8 standard style</p>
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>source : str
+  Source code</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><strong><code>source</code></strong> : <em><code>str</code></em>   <p>Source code</p></li>
+<li><strong><code>source</code></strong> : <em><code>str</code></em></li>
 </ul>
 
 </div>
@@ -893,7 +398,7 @@ def addition(
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>@delegates()
-def addition(a, b=2):
+def addition(a:(int, float), b:int=2):
     &#34;&#34;&#34;Adds two numbers together
 
     Parameters
@@ -934,15 +439,19 @@ def addition(a, b=2):
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="reformat_class" class="doc_header"><code>reformat_class</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L121" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_class</code>(<strong><code>source</code></strong>:<code>str</code>, <strong><code>recursion_level</code></strong>:<code>int</code>=<em><code>1</code></em>)</p>
+<h4 id="reformat_class" class="doc_header"><code>reformat_class</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_class</code>(<strong><code>source</code></strong>:<code>str</code>, <strong><code>recursion_level</code></strong>:<code>int</code>=<em><code>1</code></em>)</p>
 </blockquote>
 <p>Takes messy class code and refactors it into a readable PEP-8 standard style</p>
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>source : str
+  Source code of a full class
+recursion_level : int
+  Depth of recursion</p>
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><strong><code>source</code></strong> : <em><code>str</code></em>   <p>Source code of a full class</p></li>
-</ul>
-<ul>
-<li><strong><code>recursion_level</code></strong> : <em><code>int</code></em>, <em>optional</em>  <p>Depth of recursion</p></li>
+<li><p><strong><code>source</code></strong> : <em><code>str</code></em></p>
+</li>
+<li><p><strong><code>recursion_level</code></strong> : <em><code>int</code></em>, <em>optional</em></p>
+</li>
 </ul>
 
 </div>
@@ -991,7 +500,7 @@ def addition(a, b=2):
 <span class="s1">        self.a = a</span>
 <span class="s1">        self.b = b</span>
 <span class="s1">        </span>
-<span class="s1">    @typedispatch</span>
+<span class="s1">    @delegates()</span>
 <span class="s1">    def add(</span>
 <span class="s1">        self</span>
 <span class="s1">    ) -&gt; (int,float): # Sum of a and b</span>
@@ -1032,7 +541,7 @@ def addition(a, b=2):
     _b = 5
     _c = 3
     class A():
-        def __init__(self, o):
+        def __init__(self, o:int):
             &#34;&#34;&#34;
             Parameters
             ----------
@@ -1041,7 +550,7 @@ def addition(a, b=2):
             &#34;&#34;&#34;
             self.o = o
         
-    def __init__(self, a, b):
+    def __init__(self, a:int, b:(int, float)):
         &#34;&#34;&#34;
         Parameters
         ----------
@@ -1053,7 +562,7 @@ def addition(a, b=2):
         self.a = a
         self.b = b
     
-    @typedispatch
+    @delegates()
     def add(self):
         &#34;&#34;&#34;Adds self.a and self.b
     
@@ -1081,142 +590,180 @@ def addition(a, b=2):
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ExampleClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The summary line for a class docstring should fit on one line.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">multiple_funcs</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;from fastai.vision.all import *</span>
 
-<span class="sd">    If the class has public attributes, they may be documented here</span>
-<span class="sd">    in an ``Attributes`` section and follow the same formatting as a</span>
-<span class="sd">    function&#39;s ``Args`` section. Alternatively, attributes may be documented</span>
-<span class="sd">    inline with the attribute&#39;s declaration (see __init__ method below).</span>
+<span class="s1">import numpy as np</span>
 
-<span class="sd">    Properties created with the ``@property`` decorator should be documented</span>
-<span class="sd">    in the property&#39;s getter method.</span>
+<span class="s1">class Arithmetic:</span>
+<span class="s1">    &quot;A class that can perform basic arithmetic on ops&quot;</span>
+<span class="s1">    _o = 2</span>
+<span class="s1">    _b = 5</span>
+<span class="s1">    </span>
+<span class="s1">    _c = 3</span>
+<span class="s1">    </span>
+<span class="s1">    class A:</span>
+<span class="s1">        def __init__(</span>
+<span class="s1">          self, </span>
+<span class="s1">          o:int # An integer</span>
+<span class="s1">        ):</span>
+<span class="s1">            self.o = o</span>
+<span class="s1">    </span>
+<span class="s1">    def __init__(</span>
+<span class="s1">        self,</span>
+<span class="s1">        a:int, # The first number to use</span>
+<span class="s1">        b:(int, float), # The second number to use</span>
+<span class="s1">    ):</span>
+<span class="s1">        self.a = a</span>
+<span class="s1">        self.b = b</span>
+<span class="s1">        </span>
+<span class="s1">    @delegates()</span>
+<span class="s1">    def add(</span>
+<span class="s1">        self</span>
+<span class="s1">    ) -&gt; (int,float): # Sum of a and b</span>
+<span class="s1">        &quot;Adds self.a and self.b&quot;</span>
+<span class="s1">        return self.a + self.b</span>
 
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    attr1 : str</span>
-<span class="sd">        Description of `attr1`.</span>
-<span class="sd">    attr2 : :obj:`int`, optional</span>
-<span class="sd">        Description of `attr2`.</span>
+<span class="s1">def foo(</span>
+<span class="s1">    a:int, # First</span>
+<span class="s1">    b:int, # Second</span>
+<span class="s1">) -&gt; (int, float): # Sum of a and b</span>
+<span class="s1">    &quot;Adds&quot;</span>
+<span class="s1">    return a+b</span>
+<span class="s1">    </span>
+<span class="s1">def baz(</span>
+<span class="s1">    a:int, # First</span>
+<span class="s1">    b:int, # Second</span>
+<span class="s1">) -&gt; (int, float): # Difference of a and b</span>
+<span class="s1">    &quot;Subtracts&quot;</span>
+<span class="s1">    return a-b</span>
+<span class="s1">    </span>
+<span class="s1">myConst = 22</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">,</span> <span class="n">param3</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Example of docstring on the __init__ method.</span>
-
-<span class="sd">        The __init__ method may be documented in either the class level</span>
-<span class="sd">        docstring, or as a docstring on the __init__ method itself.</span>
-
-<span class="sd">        Either form is acceptable, but the two should not be mixed. Choose one</span>
-<span class="sd">        convention to document the __init__ method and be consistent with it.</span>
-
-<span class="sd">        Note</span>
-<span class="sd">        ----</span>
-<span class="sd">        Do not include the `self` parameter in the ``Parameters`` section.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        param1 : str</span>
-<span class="sd">            Description of `param1`.</span>
-<span class="sd">        param2 : :obj:`list` of :obj:`str`</span>
-<span class="sd">            Description of `param2`. Multiple</span>
-<span class="sd">            lines are supported.</span>
-<span class="sd">        param3 : :obj:`int`, optional</span>
-<span class="sd">            Description of `param3`.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">attr1</span> <span class="o">=</span> <span class="n">param1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">attr2</span> <span class="o">=</span> <span class="n">param2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">attr3</span> <span class="o">=</span> <span class="n">param3</span>  <span class="c1">#: Doc comment *inline* with attribute</span>
-
-        <span class="c1">#: list of str: Doc comment *before* attribute, with type specified</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">attr4</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;attr4&quot;</span><span class="p">]</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">attr5</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="sd">&quot;&quot;&quot;str: Docstring *after* attribute, with type specified.&quot;&quot;&quot;</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">readonly_property</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;str: Properties should be documented in their getter method.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;readonly_property&quot;</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">readwrite_property</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;:obj:`list` of :obj:`str`: Properties with both a getter and setter</span>
-<span class="sd">        should only be documented in their getter method.</span>
-
-<span class="sd">        If the setter method contains notable behavior, it should be</span>
-<span class="sd">        mentioned here.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;readwrite_property&quot;</span><span class="p">]</span>
-
-    <span class="nd">@readwrite_property</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">readwrite_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="n">value</span>
-
-    <span class="k">def</span> <span class="nf">example_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Class methods are similar to regular functions.</span>
-
-<span class="sd">        Note</span>
-<span class="sd">        ----</span>
-<span class="sd">        Do not include the `self` parameter in the ``Parameters`` section.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        param1</span>
-<span class="sd">            The first parameter.</span>
-<span class="sd">        param2</span>
-<span class="sd">            The second parameter.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        bool</span>
-<span class="sd">            True if successful, False otherwise.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="kc">True</span>
-
-    <span class="k">def</span> <span class="nf">__special__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;By default special members with docstrings are not included.</span>
-
-<span class="sd">        Special members are any methods or attributes that start with and</span>
-<span class="sd">        end with a double underscore. Any special member with a docstring</span>
-<span class="sd">        will be included in the output, if</span>
-<span class="sd">        ``napoleon_include_special_with_doc`` is set to True.</span>
-
-<span class="sd">        This behavior can be enabled by changing the following setting in</span>
-<span class="sd">        Sphinx&#39;s conf.py::</span>
-
-<span class="sd">            napoleon_include_special_with_doc = True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span> <span class="nf">__special_without_docstring__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span> <span class="nf">_private</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;By default private members are not included.</span>
-
-<span class="sd">        Private members are any methods or attributes that start with an</span>
-<span class="sd">        underscore and are *not* special. By default they are not included</span>
-<span class="sd">        in the output.</span>
-
-<span class="sd">        This behavior can be changed such that private members *are* included</span>
-<span class="sd">        by changing the following setting in Sphinx&#39;s conf.py::</span>
-
-<span class="sd">            napoleon_include_private_with_doc = True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span> <span class="nf">_private_without_docstring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
+<span class="s1">def bar(</span>
+<span class="s1">    a:int, # First</span>
+<span class="s1">    b:int, # Second</span>
+<span class="s1">) -&gt; (int, float): # Product of a and b</span>
+<span class="s1">    &quot;Multiplies&quot;</span>
+<span class="s1">    return a*b&#39;&#39;&#39;</span>
 </pre></div>
 
     </div>
 </div>
 </div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="clean_file" class="doc_header"><code>clean_file</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L232" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>clean_file</code>(<strong><code>fname</code></strong>:<code>(Path, str)</code>, <strong><code>use_all</code></strong>:<code>bool</code>)</p>
+</blockquote>
+<p>Cleans an individual file from docment-style annotation to numpy-style</p>
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>fname : (Path, str)
+  The location of a filename to clean
+use_all : bool
+  Whether to add a '<strong>all</strong>' to the file</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p><strong><code>fname</code></strong> : <em><code>(Path, str)</code></em></p>
+</li>
+<li><p><strong><code>use_all</code></strong> : <em><code>bool</code></em></p>
+</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="nbagile_build_lib" class="doc_header"><code>nbagile_build_lib</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L299" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>nbagile_build_lib</code>()</p>
+</blockquote>
+<p>Export notebooks matching <code>fname</code> to python modules</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="nbagile_diff_nbs" class="doc_header"><code>nbagile_diff_nbs</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L318" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>nbagile_diff_nbs</code>()</p>
+</blockquote>
+<p>Prints the diff between an export of the library in notebooks and the actual modules</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}

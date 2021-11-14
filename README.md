@@ -1,4 +1,3 @@
-
 # nbagile
 > Making `nbdev` more Agile-Friendly
 
