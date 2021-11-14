@@ -26,6 +26,21 @@ nb_path: "index.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/mnt/d/jupyter/anaconda3/envs/nbagile/lib/python3.7/site-packages/fastprogress/fastprogress.py:102: UserWarning: Couldn&#39;t import ipywidgets properly, progress bar will use console behavior
+  warn(&#34;Couldn&#39;t import ipywidgets properly, progress bar will use console behavior&#34;)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -45,12 +60,55 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Goals:">Goals:<a class="anchor-link" href="#Goals:"> </a></h2><ul>
-<li>[ ] When exporting source code using <code>docments</code>, attach and format the docstring to Numpy format</li>
+<li>[x] When exporting source code using <code>docments</code>, attach and format the docstring to Numpy format</li>
 <li>[ ] Export tests and throw them into a pytest-compatible file format</li>
 <li>[ ] Make documentation run on Sphynx</li>
 <li>[ ] Tests are exported to a <code>tests</code> folder, source code to a source code folder, and Markdown/Sphynx documentation to a <code>docs</code> folder</li>
 <li>[ ] Individual notebooks can then be recreated from these three items</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Current-Capabilities">Current Capabilities<a class="anchor-link" href="#Current-Capabilities"> </a></h2><h3 id="Using-the-CLI">Using the CLI<a class="anchor-link" href="#Using-the-CLI"> </a></h3><p>Replace <code>nbdev_</code> commands with <code>nbagile_</code> to use it's capabilities. 
+<strong>Currently Supported</strong>:</p>
+<ul>
+<li><a href="nbagile/docstring.html#nbagile_build_lib"><code>nbagile_build_lib</code></a>: Exports code and converts it to black-style + NumPy docstrings</li>
+<li><a href="nbagile/docstring.html#nbagile_diff_nbs"><code>nbagile_diff_nbs</code></a>: A special version of <code>nbdev_diff_nbs</code> to support how nbagile works</li>
+<li><code>nbagile_build_docs</code>: Builds the docs using <a href="https://muellerzr.github.io/nbverbose">nbverbose</a></li>
+</ul>
+<h3 id="Exporting-code-from-docments-to-NumPy">Exporting code from <code>docments</code> to NumPy<a class="anchor-link" href="#Exporting-code-from-docments-to-NumPy"> </a></h3><p><a href="https://fastcore.fast.ai/docments">docments</a> is a very efficient way of documenting the parameters for your code, and is akin to how javscript is documented. We utilize comment-blocks and typing to describe how parameters are utilized. For example, we have the following:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">addition</span><span class="p">(</span>
+    <span class="n">a</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="c1"># The first number to add</span>
+    <span class="n">b</span><span class="p">:(</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">),</span> <span class="c1"># The second number to add</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span> <span class="c1"># The sum of a and b</span>
+    <span class="s2">&quot;Adds a and b&quot;</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+</pre></div>
+<p>But this is not the commonly accepted way of documenting our code, and as a whole looks quite ugly.</p>
+<p><code>nbagile</code> supports building your <a href="https://nbdev.fast.ai">nbdev</a> built libraries to instead automatically convert this code into a more NumPy-styled documentation string and definition, with the added bonus of it mimicing the Black format:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">addition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds a and b</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a : int</span>
+<span class="sd">      The first number to add</span>
+<span class="sd">    b : (int,float)</span>
+<span class="sd">      The second number to add</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    ----------</span>
+<span class="sd">    int</span>
+<span class="sd">      The sum of a and b</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+</pre></div>
+<p>This works for functions, classes, as well as functions wrapped around decorators.</p>
+<h3 id="Optional-__all__-for-nbdev">Optional <code>__all__</code> for nbdev<a class="anchor-link" href="#Optional-__all__-for-nbdev"> </a></h3><p>If you are not a fan of nbdev's <code>__all__</code> format in each file, there is an additional setting you can add to your <code>settings.ini</code>: <code>use_all</code>.</p>
+<p>If set to <code>False</code>, you won't get the <code>__all__</code> being generated in each python file</p>
 
 </div>
 </div>

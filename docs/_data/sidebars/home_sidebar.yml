@@ -10,8 +10,8 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Exporting Docstrings
-      url: test.html
+      title: Core Functionalities
+      url: /docstring
     output: web
     title: nbagile
   output: web
