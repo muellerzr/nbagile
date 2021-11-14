@@ -173,11 +173,9 @@ nb_path: "00_docstring.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_annotations" class="doc_header"><code>get_annotations</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L14" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_annotations</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
+<h4 id="get_annotations" class="doc_header"><code>get_annotations</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L22" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_annotations</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
 </blockquote>
 <p>Extracts the type annotations from source code</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>source : str
-  Source code of function or class</p>
 
 </div>
 
@@ -248,13 +246,9 @@ nb_path: "00_docstring.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="apply" class="doc_header"><code>apply</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L47" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>apply</code>(<strong><code>func</code></strong>:<code>callable</code>, <strong><code>x</code></strong>:<code>any</code>, <strong>*<code>args</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="apply" class="doc_header"><code>apply</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>apply</code>(<strong><code>func</code></strong>:<code>callable</code>, <strong><code>x</code></strong>:<code>any</code>, <strong>*<code>args</code></strong>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Apply <code>func</code> recursively to <code>x</code>, passing on args. Originally from fastai.torch_core</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>func : callable
-  A callable function
-x : any
-  Something to apply <code>func</code> on</p>
 
 </div>
 
@@ -284,11 +278,9 @@ x : any
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="reformat_function" class="doc_header"><code>reformat_function</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L64" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_function</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
+<h4 id="reformat_function" class="doc_header"><code>reformat_function</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L62" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_function</code>(<strong><code>source</code></strong>:<code>str</code>)</p>
 </blockquote>
 <p>Takes messy source code and refactors it into a readable PEP-8 standard style</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>source : str
-  Source code</p>
 
 </div>
 
@@ -433,13 +425,9 @@ def addition(a:(int, float), b:int=2):
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="reformat_class" class="doc_header"><code>reformat_class</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L131" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_class</code>(<strong><code>source</code></strong>:<code>str</code>, <strong><code>recursion_level</code></strong>:<code>int</code>=<em><code>1</code></em>)</p>
+<h4 id="reformat_class" class="doc_header"><code>reformat_class</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L137" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reformat_class</code>(<strong><code>source</code></strong>:<code>str</code>, <strong><code>recursion_level</code></strong>:<code>int</code>=<em><code>1</code></em>)</p>
 </blockquote>
 <p>Takes messy class code and refactors it into a readable PEP-8 standard style</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>source : str
-  Source code of a full class
-recursion_level : int
-  Depth of recursion</p>
 
 </div>
 
@@ -667,13 +655,9 @@ recursion_level : int
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="clean_file" class="doc_header"><code>clean_file</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L232" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>clean_file</code>(<strong><code>fname</code></strong>:<code>(Path, str)</code>, <strong><code>use_all</code></strong>:<code>bool</code>)</p>
+<h4 id="clean_file" class="doc_header"><code>clean_file</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L242" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>clean_file</code>(<strong><code>fname</code></strong>:<code>(Path, str)</code>, <strong><code>use_all</code></strong>:<code>bool</code>)</p>
 </blockquote>
 <p>Cleans an individual file from docment-style annotation to numpy-style</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>fname : (Path, str)
-  The location of a filename to clean
-use_all : bool
-  Whether to add a '<strong>all</strong>' to the file</p>
 
 </div>
 
@@ -696,7 +680,7 @@ use_all : bool
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="nbagile_build_lib" class="doc_header"><code>nbagile_build_lib</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L299" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>nbagile_build_lib</code>()</p>
+<h4 id="nbagile_build_lib" class="doc_header"><code>nbagile_build_lib</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>nbagile_build_lib</code>()</p>
 </blockquote>
 <p>Export notebooks matching <code>fname</code> to python modules</p>
 
@@ -728,7 +712,7 @@ use_all : bool
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="nbagile_diff_nbs" class="doc_header"><code>nbagile_diff_nbs</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L318" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>nbagile_diff_nbs</code>()</p>
+<h4 id="nbagile_diff_nbs" class="doc_header"><code>nbagile_diff_nbs</code><a href="https://github.com/muellerzr/nbagile/tree/master/nbagile/docstring.py#L326" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>nbagile_diff_nbs</code>()</p>
 </blockquote>
 <p>Prints the diff between an export of the library in notebooks and the actual modules</p>
 
