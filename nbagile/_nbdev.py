@@ -8,6 +8,7 @@ index = {"get_annotations": "00_docstring.ipynb",
          "reformat_class": "00_docstring.ipynb",
          "clean_file": "00_docstring.ipynb",
          "nbagile_build_lib": "00_docstring.ipynb",
+         "nbagile_build_docs": "00_docstring.ipynb",
          "nbagile_diff_nbs": "00_docstring.ipynb",
          "printme": "99_test.ipynb"}
 

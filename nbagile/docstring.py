@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 __all__ = ['get_annotations', 'apply', 'reformat_function', 'reformat_class', 'clean_file', 'nbagile_build_lib',
-           'nbagile_diff_nbs']
+           'nbagile_build_docs', 'nbagile_diff_nbs']
 
 import inspect, ast, astunparse
 import fastcore.docments as dments
@@ -309,6 +309,17 @@ def nbagile_build_lib():
     cfg = read_config_file((cfg_path / 'settings.ini'))
     for file in files:
         clean_file(file, use_all=cfg['use_all'])
+
+from nbverbose.cli import nbdev_build_docs
+
+@call_parse
+def nbagile_build_docs():
+    """Builds documentation from notebooks
+    """
+    exp2html.write_tmpls()
+    exp.notebook2script()
+    nbdev_build_docs()
+    nbagile_build_lib()
 
 import subprocess
 from distutils.dir_util import copy_tree
