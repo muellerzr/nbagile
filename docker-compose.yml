@@ -21,15 +21,17 @@ services:
 
   watcher:
     <<: *fastai
-    command: watchmedo shell-command --command nbdev_build_docs --pattern *.ipynb --recursive --drop
+    command: >
+            bash -c "pip install .
+            &&watchmedo shell-command --command nbagile_build_docs --pattern *.ipynb --recursive --drop"
     network_mode: host # for GitHub Codespaces https://github.com/features/codespaces/
 
   jekyll:
     <<: *fastai
     ports:
-     - "4000:4000"
+     - "4004:4000"
     command: >
      bash -c "pip install .
-     && nbdev_build_docs && cd docs
+     && nbagile_build_docs && cd docs
      && bundle i
      && chmod -R u+rwx . && bundle exec jekyll serve --host 0.0.0.0"

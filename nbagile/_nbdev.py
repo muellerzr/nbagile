@@ -15,7 +15,7 @@ index = {"get_annotations": "00_docstring.ipynb",
 modules = ["docstring.py",
            "testing.py"]
 
-doc_url = "https://muellerzr.github.io/nbagile/"
+doc_url = "https://muellerzr.github.io/nbagile"
 
 git_url = "https://github.com/muellerzr/nbagile/tree/master/"
 

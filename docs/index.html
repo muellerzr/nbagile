@@ -26,21 +26,6 @@ nb_path: "index.ipynb"
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/mnt/d/jupyter/anaconda3/envs/nbagile/lib/python3.7/site-packages/fastprogress/fastprogress.py:102: UserWarning: Couldn&#39;t import ipywidgets properly, progress bar will use console behavior
-  warn(&#34;Couldn&#39;t import ipywidgets properly, progress bar will use console behavior&#34;)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -77,7 +62,7 @@ nb_path: "index.ipynb"
 <ul>
 <li><a href="nbagile/docstring.html#nbagile_build_lib"><code>nbagile_build_lib</code></a>: Exports code and converts it to black-style + NumPy docstrings</li>
 <li><a href="nbagile/docstring.html#nbagile_diff_nbs"><code>nbagile_diff_nbs</code></a>: A special version of <code>nbdev_diff_nbs</code> to support how nbagile works</li>
-<li><code>nbagile_build_docs</code>: Builds the docs using <a href="https://muellerzr.github.io/nbverbose">nbverbose</a></li>
+<li><a href="nbagile/docstring.html#nbagile_build_docs"><code>nbagile_build_docs</code></a>: Builds the docs using <a href="https://muellerzr.github.io/nbverbose">nbverbose</a></li>
 </ul>
 <h3 id="Exporting-code-from-docments-to-NumPy">Exporting code from <code>docments</code> to NumPy<a class="anchor-link" href="#Exporting-code-from-docments-to-NumPy"> </a></h3><p><a href="https://fastcore.fast.ai/docments">docments</a> is a very efficient way of documenting the parameters for your code, and is akin to how javscript is documented. We utilize comment-blocks and typing to describe how parameters are utilized. For example, we have the following:</p>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">addition</span><span class="p">(</span>

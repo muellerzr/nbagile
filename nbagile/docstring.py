@@ -296,7 +296,6 @@ import nbdev.export as exp
 import nbdev.export2html as exp2html
 from nbdev.imports import read_config_file
 
-@call_parse
 def nbagile_build_lib():
     """Export notebooks matching `fname` to python modules
     """
@@ -311,8 +310,6 @@ def nbagile_build_lib():
         clean_file(file, use_all=cfg['use_all'])
 
 from nbverbose.cli import nbdev_build_docs
-
-@call_parse
 def nbagile_build_docs():
     """Builds documentation from notebooks
     """
@@ -326,7 +323,6 @@ from distutils.dir_util import copy_tree
 import tempfile
 import shutil
 
-@call_parse
 def nbagile_diff_nbs():
     """Prints the diff between an export of the library in notebooks and the actual modules
     """
