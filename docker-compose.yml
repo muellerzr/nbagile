@@ -29,7 +29,7 @@ services:
   jekyll:
     <<: *fastai
     ports:
-     - "4004:4000"
+     - "4000:4000"
     command: >
      bash -c "pip install .
      && nbagile_build_docs && cd docs
